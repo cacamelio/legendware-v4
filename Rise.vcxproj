@@ -383,7 +383,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PreferredToolArchitecture />
@@ -391,7 +391,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <PreferredToolArchitecture />
@@ -414,11 +414,10 @@
     <GenerateManifest>false</GenerateManifest>
     <EnableMicrosoftCodeAnalysis>false</EnableMicrosoftCodeAnalysis>
     <OutDir>Build\</OutDir>
-    <IncludePath>$(DXSDK_DIR)Include;Libs\freetype;Libs\ws;Libs\gzip\include;Libs\zlib\include;Libs\openssl\include;Lua\lua\src;$(IncludePath)</IncludePath>
+    <IncludePath>Libs;$(DXSDK_DIR)Include;Libs\freetype;Libs\ws;Libs\gzip\include;Libs\zlib\include;Libs\openssl\include;Lua\lua\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;Libs\freetype;Libs\zlib\bin;tls_client\OpenSSL;Libs\openssl;Lua\lua\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <TargetName>cheat</TargetName>
     <GenerateManifest>false</GenerateManifest>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;Libs\freetype;Libs\zlib\bin;tls_client\OpenSSL;Libs\openssl;Lua\lua\src;$(LibraryPath)</LibraryPath>
@@ -469,7 +468,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DebugInformationFormat>None</DebugInformationFormat>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <ControlFlowGuard>false</ControlFlowGuard>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <Optimization>MinSpace</Optimization>
     </ClCompile>
@@ -480,13 +479,14 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;ws2_32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;ws2_32.lib;freetype.lib;libs/lua51.lib;libs/luajit.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/MAP /NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
       <GenerateMapFile>true</GenerateMapFile>
       <BaseAddress>
       </BaseAddress>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <TargetMachine>MachineX86</TargetMachine>
+      <ForceFileOutput>Enabled</ForceFileOutput>
     </Link>
     <PreBuildEvent>
       <Command>
@@ -499,7 +499,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;RISE_EXPORTS;_WINDOWS;_USRDLL;JSON_NOEXCEPTION;CPPHTTPLIB_OPENSSL_SUPPORT;CPPHTTPLIB_NO_EXCEPTIONS;ZLIB_WINAPI;_HAS_EXCEPTIONS=0;SOL_LUAJIT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;RISE_EXPORTS;_WINDOWS;_USRDLL;JSON_NOEXCEPTION;CPPHTTPLIB_OPENSSL_SUPPORT;CPPHTTPLIB_NO_EXCEPTIONS;ZLIB_WINAPI;_HAS_EXCEPTIONS=0;SOL_LUAJIT;LUA_BUILD_AS_DLL=0;LUAJIT_ENABLE_STATIC=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
@@ -533,13 +533,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;ws2_32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;ws2_32.lib;freetype.lib;libs/lua51.lib;libs/luajit.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/MAP /NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
       <GenerateMapFile>true</GenerateMapFile>
       <BaseAddress>
       </BaseAddress>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <TargetMachine>MachineX86</TargetMachine>
+      <ForceFileOutput>Enabled</ForceFileOutput>
     </Link>
     <PreBuildEvent>
       <Command>

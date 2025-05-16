@@ -108,7 +108,7 @@ void __stdcall hooked_createmove(int sequence_number, float input_sample_frameti
 		}
 	}
 
-	/*if (ctx->loaded_script)
+	if (ctx->loaded_script)
 	{
 		auto& states = Lua_manager->states;
 
@@ -126,7 +126,7 @@ void __stdcall hooked_createmove(int sequence_number, float input_sample_frameti
 				}
 			}
 		}
-	}*/
+	}
 	
 	movement_system->run(cmd);
 

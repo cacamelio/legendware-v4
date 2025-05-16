@@ -49,7 +49,7 @@ SpoofedConvar* spoofed_sv_pure = nullptr;
 
 void run_lua_callback(ClientFrameStage_t stage)
 {
-	/*if (ctx->loaded_script)
+	if (ctx->loaded_script)
 	{
 		std::string current_callback;
 		switch (stage)
@@ -87,7 +87,7 @@ void run_lua_callback(ClientFrameStage_t stage)
 			}
 		}
 
-	}*/
+	}
 
 
 }
@@ -246,7 +246,7 @@ void __stdcall hooked_framestagenotify(ClientFrameStage_t stage)
 			}
 		}
 
-		/*for (auto& current : Lua_manager->scripts)
+		for (auto& current : Lua_manager->scripts)
 		{
 			auto& items = Lua_manager->items.at(Lua_manager->get_script_id(current));
 
@@ -278,7 +278,7 @@ void __stdcall hooked_framestagenotify(ClientFrameStage_t stage)
 						key_bind->state = true;
 				}
 			}
-		}*/
+		}
 
 		if (config->anti_aim.manual_forward_key.state && !backup_manual_forward_key)
 		{

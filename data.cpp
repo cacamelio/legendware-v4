@@ -173,7 +173,7 @@ void signatures_initialize()
 	signatures_manager->signatures[SIGNATURE_SET_VALUE_KEY_VALUE] = signatures_manager->find_signature(crypt_str("engine.dll"), crypt_str("55 8B EC 8B 49 08 6A 01 FF 75 08 E8 ? ? ? ? 85 C0 74 0E"));
 	signatures_manager->signatures[SIGNATURE_GET_INT_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("55 8B EC 6A 00 FF 75 08 E8 ? ? ? ? 85 C0 74 42"));
 	signatures_manager->signatures[SIGNATURE_GET_STR_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("55 8B EC 83 E4 C0 81 ? ? ? ? ? 53 8B 5D 08 56 57 6A"));
-	signatures_manager->signatures[SIGNATURE_GET_FLOAT_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("55 8B EC 83 E4 C0 81 EC 74 02 00 00 53 8B 5D"));
+	signatures_manager->signatures[SIGNATURE_GET_FLOAT_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("55 8B EC 51 6A 00 FF 75 08 F3 0F 11 55 ?? E8 ?? ?? ?? ?? 85 C0 74 7C 0F BE 48 10 49"));
 	signatures_manager->signatures[SIGNATURE_LOAD_FROM_FILE_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("55 8B EC 83 E4 F8 83 EC 14 53 56 8B 75 08 57 FF 75 10"));
 	signatures_manager->signatures[SIGNATURE_MERGE_FROM_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("55 8B EC 53 8B D9 56 85 DB"));
 	signatures_manager->signatures[SIGNATURE_DESTRUCTOR_KEY_VALUE] = signatures_manager->find_signature(crypt_str("client.dll"), crypt_str("56 8B F1 E8 ? ? ? ? 8B 4E 14"));

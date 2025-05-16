@@ -19,21 +19,21 @@ void Events::FireGameEvent(IGameEvent* event)
 {
 	auto event_name = event->GetName();
 
-	//if (ctx->loaded_script)
-	//{
-	//	for (auto& script : Lua_manager->scripts)
-	//	{
-	//		auto script_id = Lua_manager->get_script_id(script);
+	if (ctx->loaded_script)
+	{
+		for (auto& script : Lua_manager->scripts)
+		{
+			auto script_id = Lua_manager->get_script_id(script);
 
-	//		if (Lua_manager->events.find(script_id) == Lua_manager->events.end())
-	//			continue;
+			if (Lua_manager->events.find(script_id) == Lua_manager->events.end())
+				continue;
 
-	//		if (Lua_manager->events[script_id].find(event_name) == Lua_manager->events[script_id].end())
-	//			continue;
+			if (Lua_manager->events[script_id].find(event_name) == Lua_manager->events[script_id].end())
+				continue;
 
-	//		Lua_manager->events[script_id][event_name](event);
-	//	}
-	//}
+			Lua_manager->events[script_id][event_name](event);
+		}
+	}
 
 	if (crypt_hash_r(event_name) == crypt_hash("weapon_fire"))
 	{

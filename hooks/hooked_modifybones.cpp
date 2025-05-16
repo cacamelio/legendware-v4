@@ -42,6 +42,7 @@ void __fastcall hooked_set_collision_bounds(ICollideable* p, int edx, const Vect
 	//TODO: predict it for local & enemies.
 	// dont remove the restore, its needed to fix valves brain.
 	//
+	
 
 	reinterpret_cast <void(__thiscall*)(ICollideable*, const Vector&, const Vector&)>(original_set_collision_bounds)(p, mi, ma);
 }

@@ -1,9 +1,10 @@
 // This is an independent project of an individual developer. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
+
 #define WIN32_LEAN_AND_MEAN
 
-
+#include "Lua\Clua.h"
 #include "includes.h"
 #include "data.h"
 #include "globals.h"
@@ -53,12 +54,14 @@
 HMODULE base_address = nullptr;
 size_t module_size = 0;
 
+
+
 LONG CALLBACK exception_handler(EXCEPTION_POINTERS* exception_pointers)
 {
 	if (exception_pointers->ExceptionRecord->ExceptionCode == STATUS_HEAP_CORRUPTION)
 		return EXCEPTION_CONTINUE_EXECUTION;
 
-	if ((uintptr_t)exception_pointers->ExceptionRecord->ExceptionAddress < (uintptr_t)base_address || (uintptr_t)exception_pointers->ExceptionRecord->ExceptionAddress > (uintptr_t)base_address + module_size)
+	if ((uintptr_t)exception_pointers->ExceptionRecord->ExceptionAddress < (uintptr_t)base_address || (uintptr_t)exception_pointers->ExceptionRecord->ExceptionAddress >(uintptr_t)base_address + module_size)
 		return EXCEPTION_CONTINUE_SEARCH;
 
 	std::stringstream text;
@@ -120,7 +123,14 @@ DWORD WINAPI main_function(LPVOID module_address)
 	if (freopen_s(&file, crypt_str("CONOUT$"), crypt_str("w"), stdout))
 		return EXIT_FAILURE;
 #endif
-
+	// ovde trebam da uradim da fixujem ovaj problem sa lua51.dll
+	// moguce da je lua manager issue al neznam, podsetnik :D
+	// try to do this (hardcoded path) in a better way
+	//HMODULE luaModule = LoadLibraryA("C:\\Users\\OxIceBear\\Desktop\\lua51.dll");
+	//if (!luaModule) {
+	//	MessageBoxA(NULL, "Failed to load lua51.dll. Please place it in the same directory as the cheat.", "Error", MB_ICONERROR);
+	//	return EXIT_FAILURE;
+	//}
 	interfaces_manager = new Interfaces;
 	netvars_manager = new Netvars;
 	convars_manager = new Convars;
@@ -149,8 +159,6 @@ DWORD WINAPI main_function(LPVOID module_address)
 	penetration = new Penetration;
 	engine_prediction = new Prediction;
 
-
-
 	sound_esp = new SoundEsp;
 	spectator_list = new SpectatorList;
 	third_person = new ThirdPerson;
@@ -158,20 +166,18 @@ DWORD WINAPI main_function(LPVOID module_address)
 	world_color = new WorldColor;
 	world_esp = new WorldEsp;
 
-
-
 	resources = new resource_manager;
 	thread_pool = new ThreadPool;
-	//Lua_manager = new c_lua;
 
+	// create a raw pointer and set it to the global lua manager
+	// this works
+	c_lua* lua_instance = new c_lua;
+	Lua_manager.set(lua_instance);
 
 	signatures_initialize();
 	interfaces_initialize();
 	netvars_initialize();
 	convars_initialize();
-
-
-
 
 	hooks_initialize();
 
@@ -180,7 +186,7 @@ DWORD WINAPI main_function(LPVOID module_address)
 
 	proxy->initialize();
 
-	//Lua_manager->initialize();
+	Lua_manager->initialize();
 
 	config->initialize();
 
@@ -198,7 +204,7 @@ DWORD WINAPI main_function(LPVOID module_address)
 	FreeConsole();
 #endif
 
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 BOOL WINAPI DllMain(HMODULE module_address, DWORD reason_for_call, LPVOID reserved)
@@ -216,5 +222,5 @@ BOOL WINAPI DllMain(HMODULE module_address, DWORD reason_for_call, LPVOID reserv
 	else if (reason_for_call == DLL_PROCESS_DETACH)
 		base_address = nullptr;
 
-    return TRUE;
+	return TRUE;
 }

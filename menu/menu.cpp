@@ -198,7 +198,7 @@ void Menu::initialize_gui(crypt_ptr <IDirect3DDevice9> device)
 	renderer_imgui.draw_list_rendering = new ImDrawList(ImGui::GetDrawListSharedData());
 	renderer_imgui.init = true;
 
-	//lua_editor.init();
+	lua_editor.init();
 	initialized_imgui = true;
 
 
@@ -432,8 +432,8 @@ void Menu::draw()
 	u::fade(!s::is_opened, s::menu_alpha, 0.0f, 255.0f, 7.0f);
 	ImGui::GetStyle().Alpha = s::menu_alpha / 255.0f;
 
-	/*if (lua_editor.is_open())
-		lua_editor.draw();*/
+	if (lua_editor.is_open())
+		lua_editor.draw();
 
 	if (!config->load_config.empty() || config->load)
 	{
@@ -1575,7 +1575,7 @@ void Menu::draw()
 			}
 		}
 
-		/*for (auto& current : Lua_manager->scripts)
+		for (auto& current : Lua_manager->scripts)
 		{
 			auto& items = Lua_manager->items.at(Lua_manager->get_script_id(current));
 
@@ -1592,7 +1592,7 @@ void Menu::draw()
 					}
 				}
 			}
-		}*/
+		}
 	}
 
 	u::fade(!config->misc.key_binds || !draw_key_binds, s::keybind_alpha, 0.0f, 255.0f, 7.0f);
@@ -1704,7 +1704,7 @@ void Menu::draw()
 						binds.emplace_back(KeyBind{ key_bind->name, key_bind->mode });
 				}
 			}
-		/*	for (auto& current : Lua_manager->scripts)
+			for (auto& current : Lua_manager->scripts)
 			{
 				auto& items = Lua_manager->items.at(Lua_manager->get_script_id(current));
 
@@ -1717,8 +1717,7 @@ void Menu::draw()
 						}
 					}
 				}
-			}*/
-
+			}
 
 			ImGui::SetCursorPos(u::dpi(ImVec2(17.0f, 40.0f)));
 			ImGui::BeginGroup();
