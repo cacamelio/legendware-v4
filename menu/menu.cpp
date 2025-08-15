@@ -1034,12 +1034,12 @@ void Menu::draw()
 
 						imgui_ex::end_child();
 
-						/*imgui_ex::begin_child(crypt_str("##visuals_world_third"), u::dpi(ImVec2(250.0f, 155.0f)), s::flags_nm);
+						imgui_ex::begin_child(crypt_str("##visuals_world_third"), u::dpi(ImVec2(250.0f, 155.0f)), s::flags_nm);
 						{
 							tabs::visuals::world_third_tab();
-						}*/
+						}
 
-						//imgui_ex::end_child();
+						imgui_ex::end_child();
 					}
 
 					ImGui::EndGroup();
@@ -1049,7 +1049,7 @@ void Menu::draw()
 					{
 						imgui_ex::begin_child(crypt_str("##visuals_world_fourth"), u::dpi(ImVec2(250.0f, 585.0f)), s::flags_nm);
 						{
-							/*	tabs::visuals::world_forth_tab();
+								tabs::visuals::world_forth_tab();
 							}
 
 							imgui_ex::end_child();
@@ -1057,13 +1057,13 @@ void Menu::draw()
 							ImGui::SetCursorPos(u::dpi(ImVec2(270.0f, 180.0f)));
 
 							imgui_ex::begin_child(crypt_str("##visuals_world_fifth"), u::dpi(ImVec2(250.0f, 155.0f)), s::flags_nm);
-							{*/
+							{
 							tabs::visuals::world_fifth_tab();
 						}
 
 						imgui_ex::end_child();
 
-						/*	ImGui::SetCursorPos(u::dpi(ImVec2(270.0f, 345.0f)));
+							ImGui::SetCursorPos(u::dpi(ImVec2(270.0f, 345.0f)));
 
 							imgui_ex::begin_child(crypt_str("##visuals_world_sixth"), u::dpi(ImVec2(250.0f, 250.0f)), s::flags_nm);
 							{
@@ -1071,7 +1071,7 @@ void Menu::draw()
 								tabs::visuals::world_fifth_tab();
 							}
 
-							imgui_ex::end_child();*/
+							imgui_ex::end_child();
 					}
 
 					ImGui::EndGroup();
@@ -1382,8 +1382,8 @@ void Menu::draw()
 			s::tab = s::rage_subtab = s::vis_subtab = s::settings_subtab = 0;
 			break;
 		}
-	/*	Lua_manager->window_pos = ImGui::GetWindowPos();
-		Lua_manager->window_size = ImGui::GetWindowSize();*/
+		Lua_manager->window_pos = ImGui::GetWindowPos();
+		Lua_manager->window_size = ImGui::GetWindowSize();
 
 	}
 
