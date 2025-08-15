@@ -1,0 +1,124 @@
+#define WIN32_LEAN_AND_MEAN
+
+#include "resource_manager.h"
+#include "tls_client\httplib.h"
+#include "globals.h"
+#include <filesystem>
+
+__forceinline unsigned crc32(void* buffer, size_t size)
+{
+	auto crc32 = (unsigned)~0;
+
+	for (auto i = 0; i < size; ++i)
+		crc32 = (crc32 >> 8) ^ crc32_table[(crc32 ^ ((unsigned char*)buffer)[i]) & UCHAR_MAX];
+
+	return ~crc32;
+}
+
+void resource_manager::download(std::string link)
+{
+	auto path_resources = getenv(crypt_str("APPDATA")) + std::string(crypt_str("\\Legendware\\"));
+
+	if (!std::filesystem::exists(path_resources))
+		std::filesystem::create_directories(path_resources);
+
+	if (!std::filesystem::exists(path_resources + crypt_str("resources\\")))
+		std::filesystem::create_directories(path_resources + crypt_str("resources\\"));
+
+	if (!std::filesystem::exists(path_resources + crypt_str("resources\\fonts\\")))
+		std::filesystem::create_directories(path_resources + crypt_str("resources\\fonts\\"));
+
+	if (!std::filesystem::exists(path_resources + crypt_str("resources\\images\\")))
+		std::filesystem::create_directories(path_resources + crypt_str("resources\\images\\"));
+
+	if (!std::filesystem::exists(path_resources + link)) {
+		
+		static httplib::SSLClient client(crypt_str("cdn.legendware.pw"));
+		auto res = client.Get(link.c_str());
+
+		if (res->status == 200)
+		{
+
+			FILE* file = nullptr;
+			auto status = fopen_s(&file, (path_resources + link).c_str(), crypt_str("wb"));
+			if (file) {
+				fwrite(res->body.data(), 1, res->body.size(), file);
+				fclose(file);
+			}
+
+			data_info data_temp;
+			data_temp.size = res->body.size();
+			data_temp.buffer = new uint8_t[res->body.size()];
+			memcpy(data_temp.buffer, res->body.data(), res->body.size());
+			m_data[link.c_str()] = data_temp;
+		}
+	}
+	else {
+		FILE* file = nullptr;
+		auto status = fopen_s(&file, (path_resources + link).c_str(), crypt_str("rb"));
+		if (file) {
+			fseek(file, 0, SEEK_END);
+			int size = ftell(file);
+			fseek(file, 0, SEEK_SET);
+			data_info data_temp;
+			data_temp.size = size;
+			data_temp.buffer = new uint8_t[size];
+			fread(data_temp.buffer, 1, size, file);
+			fclose(file);
+
+			if (hashes.contains(link) && crc32(data_temp.buffer, size) != hashes[link].get<UINT>()) {
+				static httplib::SSLClient client(crypt_str("cdn.legendware.pw"));
+				auto res = client.Get(link.c_str());
+
+				if (res->status == 200)
+				{
+
+					FILE* file = nullptr;
+					auto status = fopen_s(&file, (path_resources + link).c_str(), crypt_str("wb"));
+					if (file) {
+						fwrite(res->body.data(), 1, res->body.size(), file);
+						fclose(file);
+					}
+
+					data_info data_temp;
+					data_temp.size = res->body.size();
+					data_temp.buffer = new uint8_t[res->body.size()];
+					memcpy(data_temp.buffer, res->body.data(), res->body.size());
+					m_data[link.c_str()] = data_temp;
+				}
+			}
+			else
+				m_data[link.c_str()] = data_temp;
+		}
+	}
+}
+void resource_manager::start_download()
+{
+	static bool started = false;
+	if (started)
+		return;
+	else
+		started = true;
+	if (m_is_done)
+		return;
+
+	httplib::SSLClient client(crypt_str("legendware.pw"));
+	auto res = client.Get(ctx->avatar.c_str());
+
+	if (res->status == 200)
+	{
+		data_info data_temp;
+		data_temp.size = res->body.size();
+		data_temp.buffer = new uint8_t[res->body.size()];
+		memcpy(data_temp.buffer, res->body.data(), res->body.size());
+		m_data[ctx->avatar.c_str()] = data_temp;
+	}
+	res = client.Get(crypt_str("/get_hashes.php"));
+	if (res->status == 200)
+		this->hashes = nlohmann::json::parse(res->body);
+
+	for (auto& resource : resources)
+		download(resource);
+
+	m_is_done = true;
+}

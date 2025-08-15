@@ -985,5 +985,6 @@
     <None Include="tls_client\OpenSSL\dso.pdb" />
     <None Include="tls_client\OpenSSL\libssl-1_1.pdb" />
     <None Include="tls_client\OpenSSL\ossl_static.pdb" />
+    <None Include="resource_manager.cpp.old" />
   </ItemGroup>
 </Project>
