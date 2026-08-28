@@ -147,7 +147,7 @@ public:
 #else
 	int user_id = -1;
 
-	string username = crypt_str("User");
+	string username = crypt_str("meliohub");
 	string days = crypt_str("Lifetime");
 	string avatar = crypt_str("/data/avatars/o/0/3.jpg");
 	char token[33] = crypt_str("");
